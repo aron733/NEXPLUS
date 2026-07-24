@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NEXPLUS - Professional Trading Terminal Platform">
+    <meta name="theme-color" content="#0f172a">
+    <title>NEXPLUS - Trading Terminal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1e40af;
+            --secondary: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark-bg: #0f172a;
+            --dark-surface: #1e293b;
+            --dark-border: #334155;
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e1;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1f3a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--dark-border);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        nav .links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 10rem;
+            padding-bottom: 5rem;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border: 1px solid var(--dark-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%);
+            box-shadow: 0 12px 24px rgba(59, 130, 246, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Phases Section */
+        .phases {
+            padding: 5rem 2rem;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .phase-card {
+            background: linear-gradient(135deg, var(--dark-surface) 0%, rgba(30, 41, 59, 0.8) 100%);
+            border: 1px solid var(--dark-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .phase-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .phase-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .phase-card ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .phase-card li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .phase-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            padding: 5rem 2rem;
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .tech-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tech-column h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .tech-column ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .tech-column li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tech-column li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid var(--dark-border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            nav .links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding-top: 6rem;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .hero .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Floating animation */
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">NEXPLUS</div>
+            <ul class="links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#phases">Phases</a></li>
+                <li><a href="#tech">Tech</a></li>
+                <li><a href="https://github.com/aron733/NEXPLUS" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Professional Trading Terminal Platform</h1>
+            <p>A modern, secure, and scalable trading platform built for professionals. Real-time data, advanced analytics, and professional-grade tools.</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/aron733/NEXPLUS" class="btn btn-primary">View on GitHub</a>
+                <a href="https://github.com/aron733/NEXPLUS#getting-started" class="btn btn-secondary">Documentation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Phase 1 Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Secure Authentication</h3>
+                    <p>JWT tokens with bcrypt password hashing. Your account is protected with enterprise-grade security.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Professional Dashboard</h3>
+                    <p>Clean, intuitive interface designed for traders. Dark mode optimized for extended trading sessions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast API</h3>
+                    <p>Lightning-fast REST API with sub-200ms response times. Built on Node.js and Express.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Security First</h3>
+                    <p>CORS protection, rate limiting, input validation, and XSS prevention built-in.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsive Design</h3>
+                    <p>Works seamlessly on desktop, tablet, and mobile. Built with modern React and Tailwind CSS.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Cloud Ready</h3>
+                    <p>Deploy on Render with one click. Automatic CI/CD with GitHub Actions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phases Section -->
+    <section class="phases" id="phases">
+        <div class="container">
+            <h2 class="section-title">Roadmap</h2>
+            <div class="timeline">
+                <div class="phase-card">
+                    <span class="phase-badge">Phase 1 - NOW</span>
+                    <h3>Foundation</h3>
+                    <ul>
+                        <li>Authentication</li>
+                        <li>Dashboard</li>
+                        <li>API Core</li>
+                        <li>Deployment</li>
+                    </ul>
+                </div>
+                <div class="phase-card">
+                    <span class="phase-badge">Phase 2 - Q4 2026</span>
+                    <h3>Terminal</h3>
+                    <ul>
+                        <li>Charts</li>
+                        <li>Watchlist</li>
+                        <li>News Feed</li>
+                        <li>Calendar</li>
+                    </ul>
+                </div>
+                <div class="phase-card">
+                    <span class="phase-badge">Phase 3 - Q1 2027</span>
+                    <h3>AI Engine</h3>
+                    <ul>
+                        <li>Analysis</li>
+                        <li>Signals</li>
+                        <li>Bot</li>
+                        <li>Alerts</li>
+                    </ul>
+                </div>
+                <div class="phase-card">
+                    <span class="phase-badge">Phase 4 - Q2 2027</span>
+                    <h3>Premium</h3>
+                    <ul>
+                        <li>Payments</li>
+                        <li>Subscriptions</li>
+                        <li>Admin</li>
+                        <li>Public API</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack" id="tech">
+        <div class="container">
+            <h2 class="section-title">Technology Stack</h2>
+            <div class="tech-columns">
+                <div class="tech-column">
+                    <h4>Frontend</h4>
+                    <ul>
+                        <li>React 18</li>
+                        <li>Vite</li>
+                        <li>Tailwind CSS</li>
+                        <li>React Router</li>
+                        <li>Axios</li>
+                    </ul>
+                </div>
+                <div class="tech-column">
+                    <h4>Backend</h4>
+                    <ul>
+                        <li>Node.js 22</li>
+                        <li>Express</li>
+                        <li>Prisma ORM</li>
+                        <li>PostgreSQL</li>
+                        <li>JWT + bcrypt</li>
+                    </ul>
+                </div>
+                <div class="tech-column">
+                    <h4>Infrastructure</h4>
+                    <ul>
+                        <li>Render</li>
+                        <li>PostgreSQL</li>
+                        <li>GitHub Actions</li>
+                        <li>Docker</li>
+                        <li>GitHub Pages</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Start Building?</h2>
+            <p>Get started with NEXPLUS today. Follow the documentation or deploy to Render in minutes.</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/aron733/NEXPLUS" class="btn btn-primary">Get Started</a>
+                <a href="https://github.com/aron733/NEXPLUS/blob/main/docs/SETUP.md" class="btn btn-secondary">Read Docs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/aron733/NEXPLUS" target="_blank">GitHub</a>
+                <a href="https://github.com/aron733/NEXPLUS/docs/API.md" target="_blank">API Docs</a>
+                <a href="https://github.com/aron733/NEXPLUS/docs/ARCHITECTURE.md" target="_blank">Architecture</a>
+                <a href="https://github.com/aron733/NEXPLUS/docs/DEPLOYMENT.md" target="_blank">Deployment</a>
+            </div>
+            <p>&copy; 2026 NEXPLUS. Built with ❤️ for traders worldwide.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Status: 🚀 Phase 1 Foundation - Active Development</p>
+        </div>
+    </footer>
+</body>
+</html>
